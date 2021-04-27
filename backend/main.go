@@ -20,10 +20,12 @@ func reader(conn *websocket.Conn)  {
     messageType, p, err := conn.ReadMessage()
     if err != nil{
       log.Println(err)
+      return
     }
   fmt.Println(string(p))
     if err := conn.WriteMessage(messageType, p); err != nil{
       log.Println(err)
+      return
     }
   }
 }
@@ -33,6 +35,7 @@ func serveWS(w http.ResponseWriter, r *http.Request)  {
   ws, err := upgrader.Upgrade(w, r, nil)
   if err != nil{
     log.Println(err)
+    return
   }
   reader(ws)
 }
