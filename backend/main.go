@@ -1,29 +1,39 @@
 package main
 
 import (
-	"./pkg/websocket"
+	"github.com/1-Holopsicon-1/React_plus_golang/pkg/websk"
 	"fmt"
-	"log"
 	"net/http"
 )
 
-func serveWS(w http.ResponseWriter, r *http.Request) {
-	ws, err := websocket.Upgrade(w, r)
+func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
+	fmt.Println("WebSocket Endpoint Hit")
+	conn, err := websocket.Upgrade(w, r)
 	if err != nil {
-		log.Println(err)
-		return
+		fmt.Fprintf(w, "%+v\n", err)
 	}
-	go websocket.Writer(ws)
-	websocket.Reader(ws)
+
+	client := &websocket.Client{
+		Conn: conn,
+		Pool: pool,
+	}
+
+	pool.Register <- client
+	client.Read()
 }
 
 func setupRoutes() {
-	http.HandleFunc("/ws", serveWS)
+	pool := websocket.NewPool()
+	go pool.Start()
+
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs(pool, w, r)
+	})
 }
 
 func main() {
-	fmt.Println("Chat App v0.01")
-	fmt.Print("Running server \nPress ^C To cancel \n")
+	fmt.Println("Chat App")
+	fmt.Println("Press ^C to break")
 	setupRoutes()
 	http.ListenAndServe(":8080", nil)
 }
