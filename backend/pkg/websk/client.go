@@ -35,4 +35,3 @@ func (c *Client) Read() {
 			fmt.Printf("Message Received: %+v\n", message)
 		}
 	}
-}
