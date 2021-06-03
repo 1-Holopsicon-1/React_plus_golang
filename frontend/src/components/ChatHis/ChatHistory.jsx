@@ -15,4 +15,3 @@ class ChatHS extends Component{
     }
 }
 export default ChatHS;
-
