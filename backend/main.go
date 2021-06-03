@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/1-Holopsicon-1/React_plus_golang/pkg/websk"
+	"github.com/1-Holopsicon-1/React_plus_golang/pkg/websocket"
 	"fmt"
 	"net/http"
 )
@@ -34,6 +34,7 @@ func setupRoutes() {
 func main() {
 	fmt.Println("Chat App")
 	fmt.Println("Press ^C to break")
+	fmt.Println("\n working at http://localhost:8080")
 	setupRoutes()
 	http.ListenAndServe(":8080", nil)
 }
