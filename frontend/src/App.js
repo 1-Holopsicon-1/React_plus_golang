@@ -14,19 +14,24 @@ constructor(props) {
     }
   }
     componentDidMount(){
-        connect((msg)=> {
-            console.log("New Mes")
+        const array = new Uint32Array(1);
+        let uid = window.crypto.getRandomValues(array)[0];
+        sessionStorage.setItem("uid", uid);
+        connect((data)=> {
+            //console.log("New Mes", data)
+            let {msg, uid} = JSON.parse(data)
+            if (uid === undefined){
+                uid = -1
+            }
+           // console.log("MSG UID",msg, uid)
             this.setState(prevState =>({
-                chatHistory: [...this.state.chatHistory, msg]
+                chatHistory: [...this.state.chatHistory, {msg: msg, uid: uid}]
             }))
-            console.log(this.state);
+            //console.log(this.state);
         });
     }
-  send(event){
-    if(event.code === "Enter"){
-        sendMsg(event.target.value);
-        event.target.value = "";
-    }
+  send(msg){
+    sendMsg(msg);
   }
   render() {
     return (

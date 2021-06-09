@@ -7,8 +7,8 @@ let connect = cb =>{
         console.log("Success");
     };
     socket.onmessage = msg =>{
-        console.log(msg)
-        cb(msg);
+        console.log(msg.data)
+        cb(msg.data);
     }
     socket.onclose = event => {
         console.log("Socket close:", event);
@@ -18,8 +18,12 @@ let connect = cb =>{
     };
 };
 let sendMsg = msg =>{
+    let data = {
+        msg: msg,
+        uid: sessionStorage.getItem("uid")
+    }
     console.log("sending msg", msg);
-    socket.send(msg)
+    socket.send(JSON.stringify(data))
 };
 
 export {connect, sendMsg};

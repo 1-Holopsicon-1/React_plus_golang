@@ -2,15 +2,8 @@ import React, { Component } from "react";
 import "./Message.sass"
 
 class Message extends Component{
-    constructor(props) {
-        super(props);
-        let temp = JSON.parse(this.props.message);
-        this.state = {
-            message: temp
-        };
-    }
     render() {
-        return <div className="Message">{this.state.message.body}</div>
+        return <div id={this.props.dataId} className="Message">{this.props.message}</div>
     }
 }
 
