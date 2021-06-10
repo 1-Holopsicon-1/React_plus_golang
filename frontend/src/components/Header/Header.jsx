@@ -3,7 +3,7 @@ import "./Header.sass";
 
 const Header = () => (
     <div className="header">
-        <h2>Realtime Chat App</h2>
+        <h2>Your id - {sessionStorage.getItem("uid")}</h2>
     </div>
 )
 

@@ -7,7 +7,7 @@ let connect = cb =>{
         console.log("Success");
     };
     socket.onmessage = msg =>{
-        console.log(msg.data)
+        //console.log(msg.data)
         cb(msg.data);
     }
     socket.onclose = event => {
@@ -17,12 +17,13 @@ let connect = cb =>{
         console.log("Socket err", err);
     };
 };
+
 let sendMsg = msg =>{
     let data = {
         msg: msg,
         uid: sessionStorage.getItem("uid")
     }
-    console.log("sending msg", msg);
+    //console.log("sending msg", msg);
     socket.send(JSON.stringify(data))
 };
 
