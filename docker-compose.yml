@@ -1,0 +1,14 @@
+version: '3'
+services:
+  backend:
+    image: golang:1.15.6
+    ports:
+      - "8080:8080"
+    build: ./backend
+  frontend:
+    image: node:14-alpine
+    ports:
+      - "5000:5000"
+    build: ./project
+    depends_on:
+      - backend
